@@ -22,9 +22,15 @@ public class Main {
             "This \"The Shadow over Innsmouth\" story is real masterpiece, Howard!"
     );
 
-    assert firstMessage.getFrom().equals("Robert Howard"): "Wrong firstMessage from address";
-    assert firstMessage.getTo().equals("H.P. Lovecraft"): "Wrong firstMessage to address";
-    assert firstMessage.getContent().endsWith("Howard!"): "Wrong firstMessage content ending";
+    if (!firstMessage.getFrom().equals("Robert Howard")) {
+      throw new RuntimeException("Wrong firstMessage from address");
+    }
+    if (!firstMessage.getTo().equals("H.P. Lovecraft")) {
+      throw new RuntimeException("Wrong firstMessage to address");
+    }
+    if (!firstMessage.getContent().endsWith("Howard!")) {
+      throw new RuntimeException("Wrong firstMessage content ending");
+    }
 
     MailMessage secondMessage = new MailMessage(
             "Jonathan Nolan",
@@ -52,20 +58,24 @@ public class Main {
     //   где по получателю можно получить список сообщений, которые были ему отправлены
     Map<String, List<String>> mailBox = mailService.getMailBox();
 
-    assert mailBox.get("H.P. Lovecraft").equals(
+    if (!mailBox.get("H.P. Lovecraft").equals(
             Collections.singletonList(
                     "This \"The Shadow over Innsmouth\" story is real masterpiece, Howard!"
             )
-    ): "wrong mailService mailbox content (1)";
-
-    assert mailBox.get("Christopher Nolan").equals(
+    )) {
+      throw new RuntimeException("wrong mailService mailbox content (1)");
+    }
+    if (!mailBox.get("Christopher Nolan").equals(
             Arrays.asList(
                     "Брат, почему все так хвалят только тебя, когда практически все сценарии написал я. Так не честно!",
                     "Я так и не понял Интерстеллар."
             )
-    ): "wrong mailService mailbox content (2)";
-
-    assert mailBox.get(randomTo).equals(Collections.<String>emptyList()): "wrong mailService mailbox content (3)";
+    )) {
+      throw new RuntimeException("wrong mailService mailbox content (2)");
+    }
+    if (mailBox.get(randomTo).equals(Collections.<String>emptyList())) {
+      throw new RuntimeException("wrong mailService mailbox content (3)");
+    }
 
 
     // Создание списка из трех зарплат.
@@ -82,8 +92,14 @@ public class Main {
     // Получение и проверка словаря "почтового ящика",
     //   где по получателю можно получить список зарплат, которые были ему отправлены.
     Map<String, List<Integer>> salaries = salaryService.getMailBox();
-    assert salaries.get(salary1.getTo()).equals(Collections.singletonList(1)): "wrong salaries mailbox content (1)";
-    assert salaries.get(salary2.getTo()).equals(Collections.singletonList(Integer.MAX_VALUE)): "wrong salaries mailbox content (2)";
-    assert salaries.get(randomTo).equals(Collections.singletonList(randomSalary)): "wrong salaries mailbox content (3)";
+    if (!salaries.get(salary1.getTo()).equals(Collections.singletonList(1))) {
+      throw new RuntimeException("wrong salaries mailbox content (1)");
+    }
+    if (!salaries.get(salary2.getTo()).equals(Collections.singletonList(Integer.MAX_VALUE))) {
+      throw new RuntimeException("wrong salaries mailbox content (2)");
+    }
+    if (!salaries.get(randomTo).equals(Collections.singletonList(randomSalary))) {
+      throw new RuntimeException("wrong salaries mailbox content (3)");
+    }
   }
 }
